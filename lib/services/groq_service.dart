@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class GroqService {
   // Groq API Key
-  final String apiKey = "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";
+  final String apiKey = "YOUR_GROQ_API_KEY_HERE";
 
   // 1. സാധാരണ ചോദ്യങ്ങൾക്ക് മറുപടി നൽകുന്ന ഫംഗ്ഷൻ
   Future<String?> askGroq(String userPrompt) async {
