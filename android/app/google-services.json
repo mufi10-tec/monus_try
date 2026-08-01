@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "78082847734",
+    "project_id": "expens-mang",
+    "storage_bucket": "expens-mang.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:78082847734:android:a4a72a07d185a12d26cdd7",
+        "android_client_info": {
+          "package_name": "com.example.monuss_try"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgPuzHYHYe9zTf2QundnEqz4164bIrDOo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
