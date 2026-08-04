@@ -55,7 +55,11 @@ class _FirestoreExpenseScreenState extends State<FirestoreExpenseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+<<<<<<< HEAD
         title: const Text('My App Version B'),
+=======
+        title: const Text('My Conflict Test App - Version A'),
+>>>>>>> 53cf0ff39f7903c8def3863255a3ef74092073fa
         backgroundColor: Colors.deepPurple,
       ),
       body: Padding(
