@@ -55,7 +55,7 @@ class _FirestoreExpenseScreenState extends State<FirestoreExpenseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hello Mufi, CI/CD Working'),
+        title: const Text('Hello Mufi, CI/CD Workin'),
         backgroundColor: Colors.deepPurple,
       ),
       body: Padding(
