@@ -55,7 +55,7 @@ class _FirestoreExpenseScreenState extends State<FirestoreExpenseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('monusekuttan Expense Tracker'),
+        title: const Text('Hello Mufi, CI/CD Working'),
         backgroundColor: Colors.deepPurple,
       ),
       body: Padding(
