@@ -80673,7 +80673,7 @@ case 2:return A.M(null,r)}})
 return A.N($async$uM,r)},
 M(a){var s=this,r=null,q=A.avw(s.e,B.E_,r),p=A.avw(s.f,B.DZ,B.NV),o=A.aDw(r,r,B.tp,r,r,r,r,r,r,r,r,B.MT,r,r,r,r,r,r,r,r),n=s.d,m=A.ff(n.gld().b.h(0,"orderBy"),!0,t.j),l=A.d("createdAt".split("."),t.s)
 m.push([new A.r0(l),!0])
-return new A.zE(new A.vz(B.Rs,B.tp,new A.Rp(r,r,1/0,56),r),new A.dW(B.Dc,A.aoD(A.d([q,B.MX,p,B.MY,new A.HM(!0,s.ga0b(),r,r,r,o,B.N,r,!1,r,!0,r,new A.P0(B.Rq,B.DV,o,r,r),r),B.MZ,B.CI,new A.HY(1,B.mN,new A.Ar(new A.agj(s),A.aIm(n.a,n.gld().U0(m)).WE(),r,t.Lq),r)],t.E),B.c0,B.c4,B.te),r),r)}}
+return new A.zE(new A.vz(B.Rr,B.tp,new A.Rp(r,r,1/0,56),r),new A.dW(B.Dc,A.aoD(A.d([q,B.MX,p,B.MY,new A.HM(!0,s.ga0b(),r,r,r,o,B.N,r,!1,r,!0,r,new A.P0(B.Rq,B.DV,o,r,r),r),B.MZ,B.CI,new A.HY(1,B.mN,new A.Ar(new A.agj(s),A.aIm(n.a,n.gld().U0(m)).WE(),r,t.Lq),r)],t.E),B.c0,B.c4,B.te),r),r)}}
 A.agj.prototype={
 $2(a,b){var s,r,q=null
 if(b.a===B.mb)return B.AY
@@ -83723,8 +83723,8 @@ B.AX=new A.vS(null,null,null,null,null,null)
 B.UG=new A.adJ(0,"material")
 B.B1=new A.vW(null)
 B.AY=new A.jv(B.a2,null,null,B.B1,null)
-B.Rr=new A.ma("No expenses found in Firestore!",null,null,null,null,null,null,null,null)
-B.AZ=new A.jv(B.a2,null,null,B.Rr,null)
+B.Rs=new A.ma("No expenses found in Firestore!",null,null,null,null,null,null,null,null)
+B.AZ=new A.jv(B.a2,null,null,B.Rs,null)
 B.B_=new A.vU(null,null,null,null,null,null,null,null,null)
 B.cR=new A.qm(0,"none")
 B.cS=new A.qm(1,"isTrue")
@@ -86003,7 +86003,7 @@ B.Of=new A.t(!0,B.l,null,".AppleSystemUIFont",null,null,null,null,null,null,null
 B.Rp=new A.e3(B.PE,B.OO,B.PF,B.Q0,B.Oy,B.OF,B.P4,B.PX,B.Pe,B.Qj,B.O8,B.On,B.Qg,B.Qz,B.Of)
 B.Qy=new A.t(!0,B.k,null,null,null,null,16,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.Rq=new A.ma("Add to Firestore",null,B.Qy,null,null,null,null,null,null)
-B.Rs=new A.ma("Hello Mufi, CI/CD Workin",null,null,null,null,null,null,null,null)
+B.Rr=new A.ma("monusekuttan Expense Tracker",null,null,null,null,null,null,null,null)
 B.J4=new A.f(0.056,0.024)
 B.Ji=new A.f(0.108,0.3085)
 B.J1=new A.f(0.198,0.541)
