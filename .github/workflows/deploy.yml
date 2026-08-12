@@ -1,9 +1,10 @@
-name: Deploy Flutter Web
+name: Deploy Flutter Web and Build APK
 
 on:
   push:
     branches:
       - main
+      - build-apk-feature
 
 jobs:
   build:
@@ -27,17 +28,30 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Run Linter (Code Quality Check)
+      - name: Run Linter
         run: flutter analyze || true
 
       - name: Run Unit Tests
         run: flutter test || true
 
+      # 1. Flutter Web Build
       - name: Build Web
         run: flutter build web --release --base-href "/monus_try/"
 
+      # 2. Flutter Android APK Build
+      - name: Build Android APK
+        run: flutter build apk --release
+
+      # Web Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: Peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web
+
+      # Save Android APK as Artifact (ഡൗൺലോഡ് ചെയ്യാനായി)
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
