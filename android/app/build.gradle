@@ -1,8 +1,6 @@
 plugins {
     id "com.android.application"
-    
     id 'com.google.gms.google-services'
-   
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
 }
@@ -33,6 +31,12 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    // 💡 ഈ താഴെയുള്ള kotlinOptions ബ്ലോക്ക് ആണ് എറർ മാറ്റാൻ സഹായിക്കുന്നത്
+    kotlinOptions {
+        jvmTarget = '1.8'
+        freeCompilerArgs += ["-language-version", "1.8"]
     }
 
     defaultConfig {
