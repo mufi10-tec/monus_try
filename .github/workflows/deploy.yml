@@ -42,7 +42,7 @@ jobs:
         run: flutter build web --release --base-href "/monus_try/"
 
       - name: Build Android APK
-        run: flutter build apk --release
+        run: flutter build apk --release --build-name=1.0.0 --extra-front-end-options="--no-sound-null-safety" || flutter build apk --release
 
       - name: Deploy to GitHub Pages
         uses: Peaceiris/actions-gh-pages@v4
