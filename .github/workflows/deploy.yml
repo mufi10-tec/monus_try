@@ -19,14 +19,11 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      # 💡 ഈ സ്റ്റെപ്പ് ആഡ് ചെയ്താൽ Gradle ഡൗൺലോഡ് ആകുമ്പോഴുള്ള Network error വരില്ല!
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-
+      # Flutter-ന്റെ കൃത്യമായ പുതിയ Stable Version കൊടുത്തു
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.x'
+          flutter-version: '3.19.6'
           channel: 'stable'
 
       - name: Install dependencies
@@ -38,18 +35,22 @@ jobs:
       - name: Run Unit Tests
         run: flutter test || true
 
+      # 1. Flutter Web Build
       - name: Build Web
         run: flutter build web --release --base-href "/monus_try/"
 
+      # 2. Flutter Android APK Build
       - name: Build Android APK
-        run: flutter build apk --release --build-name=1.0.0 --extra-front-end-options="--no-sound-null-safety" || flutter build apk --release
+        run: flutter build apk --release
 
+      # Web Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: Peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web
 
+      # Save Android APK as Artifact
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
