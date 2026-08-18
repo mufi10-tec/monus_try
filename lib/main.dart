@@ -37,7 +37,8 @@ class _FirestoreExpenseScreenState extends State<FirestoreExpenseScreen> {
     if (title.isNotEmpty && amount.isNotEmpty) {
       await _expensesCollection.add({
         'title': title,
-        'amount': double.tryParse(amount) ?? 0.0, // Firestore-ൽ നമ്പർ ആയി സൂക്ഷിക്കാം
+        'amount':
+            double.tryParse(amount) ?? 0.0, // Firestore-ൽ നമ്പർ ആയി സൂക്ഷിക്കാം
         'createdAt': FieldValue.serverTimestamp(), // സർവർ സമയം
       });
 
@@ -87,7 +88,8 @@ class _FirestoreExpenseScreenState extends State<FirestoreExpenseScreen> {
               ),
               onPressed: _addExpense,
               icon: const Icon(Icons.add, color: Colors.white),
-              label: const Text('Add to Firestore', style: TextStyle(color: Colors.white, fontSize: 16)),
+              label: const Text('Add to Firestore',
+                  style: TextStyle(color: Colors.white, fontSize: 16)),
             ),
 
             const SizedBox(height: 20),
@@ -97,7 +99,9 @@ class _FirestoreExpenseScreenState extends State<FirestoreExpenseScreen> {
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                 // createdAt വച്ച് ഓഡർ ചെയ്താണ് ഡാറ്റ എടുക്കുന്നത്
-                stream: _expensesCollection.orderBy('createdAt', descending: true).snapshots(),
+                stream: _expensesCollection
+                    .orderBy('createdAt', descending: true)
+                    .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
@@ -117,7 +121,8 @@ class _FirestoreExpenseScreenState extends State<FirestoreExpenseScreen> {
                           child: ListTile(
                             title: Text(
                               data['title'] ?? '',
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             subtitle: Text('₹ ${data['amount']}'),
                             trailing: IconButton(

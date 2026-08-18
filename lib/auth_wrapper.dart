@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // ⚠️ നിങ്ങളുടെ ഹോം പേജ്, ലോഗിൻ പേജ് ഇമ്പോർട്ടുകൾ ഇവിടെ മാറ്റുക
-import 'home_page.dart'; 
-import 'login_page.dart'; 
+import 'home_page.dart';
+import 'login_page.dart';
 
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
@@ -22,11 +22,13 @@ class AuthWrapper extends StatelessWidget {
 
         // യൂസർ ലോഗിൻ ആണെങ്കിൽ direct Home Page-ലേക്ക് വിടും
         if (snapshot.hasData) {
-          return HomePage(userEmail: snapshot.data?.email ?? "User",);
+          return HomePage(
+            userEmail: snapshot.data?.email ?? "User",
+          );
         }
 
         // ലോഗിൻ അല്ലെങ്കിൽ മാത്രം Login Page കാണിക്കും
-        return  LoginPage(); // 👈 നിങ്ങളുടെ ലോഗിൻ പേജിന്റെ പേര്
+        return LoginPage(); // 👈 നിങ്ങളുടെ ലോഗിൻ പേജിന്റെ പേര്
       },
     );
   }

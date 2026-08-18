@@ -12,7 +12,7 @@ class ExpenseChart extends StatelessWidget {
     Map<String, double> dataMap = {};
 
     for (var item in expenses) {
-     String title = item["title"].toString().trim().toLowerCase();
+      String title = item["title"].toString().trim().toLowerCase();
       double amount = (item["amount"] as num).toDouble();
 
       // ഒരേ പേരിൽ ഒന്നിൽ കൂടുതൽ ചിലവുകൾ വന്നാൽ തുകകൾ തമ്മിൽ കൂട്ടാൻ വേണ്ടി
@@ -27,7 +27,8 @@ class ExpenseChart extends StatelessWidget {
     if (dataMap.isEmpty) {
       return const Padding(
         padding: EdgeInsets.all(20.0),
-        child: Text("ചിലവുകൾ ഒന്നും ചേർത്തിട്ടില്ല!", style: TextStyle(color: Colors.grey)),
+        child: Text("ചിലവുകൾ ഒന്നും ചേർത്തിട്ടില്ല!",
+            style: TextStyle(color: Colors.grey)),
       );
     }
 
@@ -39,7 +40,10 @@ class ExpenseChart extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
-          BoxShadow(color: Colors.grey.withOpacity(0.2), blurRadius: 5, spreadRadius: 2)
+          BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              blurRadius: 5,
+              spreadRadius: 2)
         ],
       ),
       child: PieChart(
@@ -49,7 +53,8 @@ class ExpenseChart extends StatelessWidget {
         chartRadius: MediaQuery.of(context).size.width / 3.2,
         legendOptions: const LegendOptions(
           showLegendsInRow: false,
-          legendPosition: LegendPosition.right, // ഐറ്റങ്ങളുടെ പേര് വലതുവശത്ത് കാണിക്കും
+          legendPosition:
+              LegendPosition.right, // ഐറ്റങ്ങളുടെ പേര് വലതുവശത്ത് കാണിക്കും
           showLegends: true,
           legendTextStyle: TextStyle(fontWeight: FontWeight.bold),
         ),

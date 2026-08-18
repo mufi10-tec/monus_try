@@ -16,9 +16,11 @@ class LoginPage extends StatelessWidget {
 
   // ലോഗിൻ ഫങ്ക്ഷൻ
   Future<void> _login(BuildContext context) async {
-    if (emailController.text.trim().isEmpty || passwordController.text.trim().isEmpty) {
+    if (emailController.text.trim().isEmpty ||
+        passwordController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('ദയവായി ഇമെയിലും പാസ്‌വേർഡും ടൈപ്പ് ചെയ്യുക!')),
+        const SnackBar(
+            content: Text('ദയവായി ഇമെയിലും പാസ്‌വേർഡും ടൈപ്പ് ചെയ്യുക!')),
       );
       return;
     }
@@ -36,7 +38,8 @@ class LoginPage extends StatelessWidget {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => HomePage(userEmail: emailController.text.trim()),
+            builder: (context) =>
+                HomePage(userEmail: emailController.text.trim()),
           ),
         );
       }
@@ -66,10 +69,11 @@ class LoginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 50),
-              const Icon(Icons.account_balance_wallet, size: 80, color: Colors.blueAccent),
+              const Icon(Icons.account_balance_wallet,
+                  size: 80, color: Colors.blueAccent),
               const SizedBox(height: 30),
               TextField(
-                controller: emailController, 
+                controller: emailController,
                 decoration: const InputDecoration(
                   labelText: "Enter your Email",
                   border: OutlineInputBorder(),
@@ -78,8 +82,8 @@ class LoginPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               TextField(
-                controller: passwordController, 
-                obscureText: true, 
+                controller: passwordController,
+                obscureText: true,
                 decoration: const InputDecoration(
                   labelText: "Enter your password",
                   border: OutlineInputBorder(),
@@ -87,24 +91,28 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              
+
               // 3. ബട്ടൺ മാത്രം റീബിൽഡ് ചെയ്യാൻ ഇവിടെ ValueListenableBuilder ഉപയോഗിക്കുന്നു 👈
               ValueListenableBuilder<bool>(
                 valueListenable: isLoadingNotifier,
                 builder: (context, isLoading, child) {
-                  return isLoading 
-                    ? const CircularProgressIndicator()
-                    : ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueAccent,
-                          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                        ),
-                        onPressed: () => _login(context), // ഫങ്ക്ഷനിലേക്ക് context പാസ്സ് ചെയ്യുന്നു
-                        child: const Text("Login", style: TextStyle(color: Colors.white, fontSize: 16)),
-                      );
+                  return isLoading
+                      ? const CircularProgressIndicator()
+                      : ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blueAccent,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 50, vertical: 15),
+                          ),
+                          onPressed: () => _login(
+                              context), // ഫങ്ക്ഷനിലേക്ക് context പാസ്സ് ചെയ്യുന്നു
+                          child: const Text("Login",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16)),
+                        );
                 },
               ),
-              
+
               const SizedBox(height: 20),
               TextButton(
                 onPressed: () {
@@ -113,7 +121,8 @@ class LoginPage extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => SignUpScreen()),
                   );
                 },
-                child: const Text("Don't have an account? Sign Up", style: TextStyle(color: Colors.blueAccent)),
+                child: const Text("Don't have an account? Sign Up",
+                    style: TextStyle(color: Colors.blueAccent)),
               ),
             ],
           ),

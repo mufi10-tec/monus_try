@@ -10,7 +10,8 @@ class RealtimeExpenseScreen extends StatefulWidget {
 
 class _RealtimeExpenseScreenState extends State<RealtimeExpenseScreen> {
   // Realtime Database റെഫറൻസ് ഉണ്ടാക്കുന്നു
-  final DatabaseReference _dbRef = FirebaseDatabase.instance.ref('monthly_budget');
+  final DatabaseReference _dbRef =
+      FirebaseDatabase.instance.ref('monthly_budget');
   final TextEditingController _budgetController = TextEditingController();
 
   @override
@@ -33,12 +34,13 @@ class _RealtimeExpenseScreenState extends State<RealtimeExpenseScreen> {
 
             // 1. REALTIME STREAM BUILDER (തത്സമയം ഡാറ്റ വായിക്കുന്നു)
             StreamBuilder<DatabaseEvent>(
-              stream: _dbRef.onValue, // ഡാറ്റാബേസിൽ എന്ത് മാറ്റം വന്നാലും ഇത് അറിയും
+              stream: _dbRef
+                  .onValue, // ഡാറ്റാബേസിൽ എന്ത് മാറ്റം വന്നാലും ഇത് അറിയും
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 }
-                
+
                 if (snapshot.hasData && snapshot.data!.snapshot.value != null) {
                   final budget = snapshot.data!.snapshot.value.toString();
                   return Text(
@@ -75,7 +77,8 @@ class _RealtimeExpenseScreenState extends State<RealtimeExpenseScreen> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.teal,
-                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
               ),
               onPressed: () async {
                 if (_budgetController.text.isNotEmpty) {
@@ -84,9 +87,12 @@ class _RealtimeExpenseScreenState extends State<RealtimeExpenseScreen> {
                   _budgetController.clear();
                 }
               },
-              child: const Text('Update Budget', style: TextStyle(color: Colors.white)),
+              child: const Text('Update Budget',
+                  style: TextStyle(color: Colors.white)),
             ),
           ],
         ),
       ),
-    );}}
+    );
+  }
+}

@@ -6,7 +6,7 @@ import 'package:monuss_try/expense_dailog/expense_dialogs.dart';
 import 'package:monuss_try/expense_provider.dart';
 import 'package:monuss_try/services/groq_service.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'total_card.dart';
 import 'expense_chart.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -23,8 +23,10 @@ class _HomePageState extends State<HomePage> {
   // 🤖 Smart AI Expense Dialog Box
   void showSmartAIDialog() {
     final TextEditingController aiInputController = TextEditingController();
-    final TextEditingController extractedTitleController = TextEditingController();
-    final TextEditingController extractedAmountController = TextEditingController();
+    final TextEditingController extractedTitleController =
+        TextEditingController();
+    final TextEditingController extractedAmountController =
+        TextEditingController();
 
     bool isLoading = false;
     bool isExtracted = false;
@@ -47,7 +49,8 @@ class _HomePageState extends State<HomePage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (!isExtracted) ...[
-                      const Text("ഉദാഹരണത്തിന്: 'ഇന്ന് സനിമക്ക് പോയി 250 രൂപയായി'"),
+                      const Text(
+                          "ഉദാഹരണത്തിന്: 'ഇന്ന് സനിമക്ക് പോയി 250 രൂപയായി'"),
                       const SizedBox(height: 10),
                       TextField(
                         controller: aiInputController,
@@ -58,14 +61,12 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ],
-
                     if (isLoading) ...[
                       const SizedBox(height: 20),
                       const CircularProgressIndicator(),
                       const SizedBox(height: 10),
                       const Text("AI വിശകലനം ചെയ്യുന്നു..."),
                     ],
-
                     if (isExtracted) ...[
                       TextField(
                         controller: extractedTitleController,
@@ -92,7 +93,6 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () => Navigator.pop(context),
                   child: const Text("Cancel"),
                 ),
-
                 if (!isExtracted)
                   ElevatedButton(
                     onPressed: isLoading
@@ -103,33 +103,40 @@ class _HomePageState extends State<HomePage> {
                             setState(() => isLoading = true);
 
                             GroqService groq = GroqService();
-                            Map<String, dynamic>? data = await groq.extractExpense(aiInputController.text.trim());
+                            Map<String, dynamic>? data = await groq
+                                .extractExpense(aiInputController.text.trim());
 
                             if (data != null) {
                               setState(() {
-                                extractedTitleController.text = data['title'] ?? "";
-                                extractedAmountController.text = data['amount'].toString();
+                                extractedTitleController.text =
+                                    data['title'] ?? "";
+                                extractedAmountController.text =
+                                    data['amount'].toString();
                                 isLoading = false;
                                 isExtracted = true;
                               });
                             } else {
                               setState(() => isLoading = false);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("വിവരങ്ങൾ വേർതിരിച്ചെടുക്കാൻ കഴിഞ്ഞില്ല!")),
+                                const SnackBar(
+                                    content: Text(
+                                        "വിവരങ്ങൾ വേർതിരിച്ചെടുക്കാൻ കഴിഞ്ഞില്ല!")),
                               );
                             }
                           },
                     child: const Text("Extract"),
                   ),
-
                 if (isExtracted)
                   ElevatedButton(
                     onPressed: () {
                       String title = extractedTitleController.text.trim();
-                      double amount = double.tryParse(extractedAmountController.text.trim()) ?? 0.0;
+                      double amount = double.tryParse(
+                              extractedAmountController.text.trim()) ??
+                          0.0;
 
                       if (title.isNotEmpty && amount > 0) {
-                        Provider.of<ExpenseProvider>(context, listen: false).addExpense(title, amount);
+                        Provider.of<ExpenseProvider>(context, listen: false)
+                            .addExpense(title, amount);
                         Navigator.pop(context);
                       }
                     },
@@ -162,16 +169,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   void addNewExpense() {
-    if (titleController.text.isEmpty || amountController.text.isEmpty || dateController.text.isEmpty) {
-      return; 
+    if (titleController.text.isEmpty ||
+        amountController.text.isEmpty ||
+        dateController.text.isEmpty) {
+      return;
     }
-    
+
     String title = titleController.text.trim();
     double amount = double.tryParse(amountController.text.trim()) ?? 0.0;
 
-    Provider.of<ExpenseProvider>(context, listen: false).addExpense(title, amount);
+    Provider.of<ExpenseProvider>(context, listen: false)
+        .addExpense(title, amount);
 
-    clearControllers(); 
+    clearControllers();
     Navigator.pop(context);
   }
 
@@ -199,7 +209,7 @@ class _HomePageState extends State<HomePage> {
         if (title.isNotEmpty && amount > 0) {
           Provider.of<ExpenseProvider>(context, listen: false)
               .updateExpense(expense["id"], title, amount);
-          
+
           clearControllers();
           Navigator.pop(context);
         }
@@ -276,7 +286,8 @@ class _HomePageState extends State<HomePage> {
                           });
 
                           GroqService groq = GroqService();
-                          String? response = await groq.askGroq(aiQuestionController.text.trim());
+                          String? response = await groq
+                              .askGroq(aiQuestionController.text.trim());
 
                           setState(() {
                             isLoading = false;
@@ -296,13 +307,14 @@ class _HomePageState extends State<HomePage> {
   // 🌩️ Cloud Function ടെസ്റ്റ് ചെയ്യാൻ
   Future<void> testCloudFunction() async {
     try {
-      HttpsCallable callable = FirebaseFunctions.instance.httpsCallable('helloExpenseManager');
+      HttpsCallable callable =
+          FirebaseFunctions.instance.httpsCallable('helloExpenseManager');
       final response = await callable.call(<String, dynamic>{
         'name': 'Monu',
       });
 
       print("Backend Response: ${response.data}");
-      
+
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -331,10 +343,12 @@ class _HomePageState extends State<HomePage> {
         'date': DateTime.now(),
       });
       print("Expense added successfully!");
-      
+
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('ഡാറ്റ എമുലേറ്ററിലേക്ക് ആഡ് ആയി!'), backgroundColor: Colors.green),
+        const SnackBar(
+            content: Text('ഡാറ്റ എമുലേറ്ററിലേക്ക് ആഡ് ആയി!'),
+            backgroundColor: Colors.green),
       );
     } catch (e) {
       print("Error adding expense: $e");
@@ -344,15 +358,19 @@ class _HomePageState extends State<HomePage> {
   // 2. എമുലേറ്ററിലെ ഡാറ്റ വായിച്ച് എടുക്കാൻ (Fetch/Read)
   Future<void> fetchExpensesFromEmulator() async {
     try {
-      var snapshot = await FirebaseFirestore.instance.collection('test_expenses').get();
-      
+      var snapshot =
+          await FirebaseFirestore.instance.collection('test_expenses').get();
+
       for (var doc in snapshot.docs) {
         print("Expense Item: ${doc.data()}");
       }
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('ആകെ ${snapshot.docs.length} ഐറ്റങ്ങൾ കിട്ടി! (Console നോക്കുക)'), backgroundColor: Colors.blue),
+        SnackBar(
+            content: Text(
+                'ആകെ ${snapshot.docs.length} ഐറ്റങ്ങൾ കിട്ടി! (Console നോക്കുക)'),
+            backgroundColor: Colors.blue),
       );
     } catch (e) {
       print("Error fetching expenses: $e");
@@ -361,7 +379,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final firebaseProvider = Provider.of<ExpenseProvider>(context); 
+    final firebaseProvider = Provider.of<ExpenseProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -378,7 +396,7 @@ class _HomePageState extends State<HomePage> {
             tooltip: "Smart Expense AI",
             onPressed: showSmartAIDialog,
           ),
-          
+
           // 🛑 ഇവിടെ മൂന്ന് ഡോട്ട് (Three Dots) മെനു ആക്കി മാറ്റിയിരിക്കുന്നു:
           PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert, color: Colors.white),
@@ -434,7 +452,7 @@ class _HomePageState extends State<HomePage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-          
+
           List<Map<String, dynamic>> firebaseExpenses = [];
           if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
             firebaseExpenses = snapshot.data!.docs.map((doc) {
@@ -443,8 +461,11 @@ class _HomePageState extends State<HomePage> {
                 "id": doc.id,
                 "title": data["title"] ?? "",
                 "amount": (data["amount"] ?? 0).toInt(),
-                "date": data["timestamp"] != null 
-                    ? (data["timestamp"] as Timestamp).toDate().toString().split(' ')[0]
+                "date": data["timestamp"] != null
+                    ? (data["timestamp"] as Timestamp)
+                        .toDate()
+                        .toString()
+                        .split(' ')[0]
                     : "No Date",
               };
             }).toList();
@@ -457,24 +478,24 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Text(
-                  "Welcome, ${widget.userEmail}", 
+                  "Welcome, ${widget.userEmail}",
                   style: const TextStyle(fontSize: 16, color: Colors.grey),
                 ),
               ),
-
               TotalCard(totalAmount: totalAmount),
-              ExpenseChart(expenses: firebaseExpenses), 
-
+              ExpenseChart(expenses: firebaseExpenses),
               Expanded(
                 child: firebaseExpenses.isEmpty
-                    ? const Center(child: Text("ചിലവുകളൊന്നും രേഖപ്പെടുത്തിയിട്ടില്ല!"))
+                    ? const Center(
+                        child: Text("ചിലവുകളൊന്നും രേഖപ്പെടുത്തിയിട്ടില്ല!"))
                     : ExpenseList(
-                        expenses: firebaseExpenses, 
+                        expenses: firebaseExpenses,
                         onEdit: (index) {
                           editExpenseInFirebase(firebaseExpenses[index]);
                         },
                         onDelete: (index) {
-                          deleteExpenseFromFirebase(firebaseExpenses[index]["id"]);
+                          deleteExpenseFromFirebase(
+                              firebaseExpenses[index]["id"]);
                         },
                       ),
               ),
@@ -483,7 +504,7 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: showExpenseDialog, 
+        onPressed: showExpenseDialog,
         backgroundColor: Colors.blueAccent,
         child: const Icon(Icons.add, color: Colors.white),
       ),

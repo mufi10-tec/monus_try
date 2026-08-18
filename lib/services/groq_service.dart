@@ -17,16 +17,13 @@ class GroqService {
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
-          "model": "llama-3.3-70b-versatile", 
+          "model": "llama-3.3-70b-versatile",
           "messages": [
             {
               "role": "system",
               "content": "You are a helpful and concise AI assistant."
             },
-            {
-              "role": "user", 
-              "content": userPrompt
-            }
+            {"role": "user", "content": userPrompt}
           ]
         }),
       );
@@ -66,7 +63,7 @@ class GroqService {
         },
         body: jsonEncode({
           "model": "llama-3.3-70b-versatile",
-          "response_format": {"type": "json_object"}, 
+          "response_format": {"type": "json_object"},
           "messages": [
             {"role": "system", "content": systemPrompt},
             {"role": "user", "content": userInput}

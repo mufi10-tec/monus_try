@@ -14,9 +14,11 @@ class SignUpScreen extends StatelessWidget {
 
   // സൈൻ അപ്പ് ഫങ്ക്ഷൻ
   Future<void> _signUp(BuildContext context) async {
-    if (_emailController.text.trim().isEmpty || _passwordController.text.trim().isEmpty) {
+    if (_emailController.text.trim().isEmpty ||
+        _passwordController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('ദയവായി ഇമെയിലും പാസ്‌വേർഡും ടൈപ്പ് ചെയ്യുക!')),
+        const SnackBar(
+            content: Text('ദയവായി ഇമെയിലും പാസ്‌വേർഡും ടൈപ്പ് ചെയ്യുക!')),
       );
       return;
     }
@@ -29,12 +31,13 @@ class SignUpScreen extends StatelessWidget {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
-      
+
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('അക്കൗണ്ട് വിജയകരമായി ഉണ്ടാക്കി!')),
         );
-        Navigator.pop(context); // രജിസ്റ്റർ ആയിക്കഴിഞ്ഞാൽ ലോഗിൻ പേജിലേക്ക് തിരിച്ചു പോകാൻ
+        Navigator.pop(
+            context); // രജിസ്റ്റർ ആയിക്കഴിഞ്ഞാൽ ലോഗിൻ പേജിലേക്ക് തിരിച്ചു പോകാൻ
       }
     } catch (e) {
       if (context.mounted) {
@@ -83,21 +86,25 @@ class SignUpScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              
+
               // 3. രജിസ്റ്റർ ബട്ടൺ മാത്രം റീബിൽഡ് ചെയ്യാൻ ValueListenableBuilder 👈
               ValueListenableBuilder<bool>(
                 valueListenable: isRegisteringNotifier,
                 builder: (context, isRegistering, child) {
-                  return isRegistering 
-                    ? const CircularProgressIndicator()
-                    : ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueAccent,
-                          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                        ),
-                        onPressed: () => _signUp(context), // ഫങ്ക്ഷനിലേക്ക് context പാസ്സ് ചെയ്യുന്നു
-                        child: const Text('Register', style: TextStyle(color: Colors.white, fontSize: 16)),
-                      );
+                  return isRegistering
+                      ? const CircularProgressIndicator()
+                      : ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blueAccent,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 50, vertical: 15),
+                          ),
+                          onPressed: () => _signUp(
+                              context), // ഫങ്ക്ഷനിലേക്ക് context പാസ്സ് ചെയ്യുന്നു
+                          child: const Text('Register',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16)),
+                        );
                 },
               ),
             ],

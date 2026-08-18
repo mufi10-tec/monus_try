@@ -19,12 +19,16 @@ class TotalCard extends StatelessWidget {
         children: [
           const Text(
             "TOTAL SPEND",
-            style: TextStyle(color: Colors.white70, fontSize: 14, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: Colors.white70,
+                fontSize: 14,
+                fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 5),
           Text(
             "₹$totalAmount", // തുക ഇവിടെ കാണിക്കും
-            style: const TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
           ),
         ],
       ),

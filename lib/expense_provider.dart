@@ -22,13 +22,14 @@ class ExpenseProvider extends ChangeNotifier {
         'amount': amount,
         'timestamp': FieldValue.serverTimestamp(), // സമയം കൃത്യമായി കിട്ടാൻ
       });
-      
+
       notifyListeners(); // സ്ക്രീൻ പുതുക്കാൻ പ്രൊവൈഡറോട് പറയുന്നു
     } catch (e) {
       print("Error adding expense: $e");
     }
   }
-Future<void> updateExpense(String docId, String title, double amount) async {
+
+  Future<void> updateExpense(String docId, String title, double amount) async {
     final user = _auth.currentUser;
     if (user == null) return;
 
@@ -45,9 +46,8 @@ Future<void> updateExpense(String docId, String title, double amount) async {
     } catch (e) {
       print("Error updating expense: $e");
     }
+  }
 
-  }   
-  
   Future<void> deleteExpense(String docId) async {
     final user = _auth.currentUser;
     if (user == null) return;
@@ -63,6 +63,7 @@ Future<void> updateExpense(String docId, String title, double amount) async {
       print("Error deleting expense: $e");
     }
   }
+
   // ഫയർബേസിൽ നിന്ന് ചെലവുകളുടെ ലിസ്റ്റ് ലൈവ് ആയി എടുക്കാനുള്ള Stream 👈
   Stream<QuerySnapshot> get expensesStream {
     final user = _auth.currentUser;
