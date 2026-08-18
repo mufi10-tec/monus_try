@@ -29,11 +29,13 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Run Linter
-        run: flutter analyze || true
+      # Code Format & Syntax Check
+      - name: Run Linter (Analyze Code)
+        run: flutter analyze
 
+      # Automated Unit & Widget Tests
       - name: Run Unit Tests
-        run: flutter test || true
+        run: flutter test
 
       # 1. Flutter Web Build
       - name: Build Web
