@@ -5,12 +5,20 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+// local.properties ലോഡ് ചെയ്യുന്നു
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file("local.properties")
 if (localPropertiesFile.exists()) {
     localPropertiesFile.withReader("UTF-8") { reader ->
         localProperties.load(reader)
     }
+}
+
+// key.properties (Keystore Secrets) ലോഡ് ചെയ്യുന്നു
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
 def flutterVersionCode = localProperties.getProperty("flutter.versionCode")
@@ -33,23 +41,35 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    // 💡 ഈ താഴെയുള്ള kotlinOptions ബ്ലോക്ക് ആണ് എറർ മാറ്റാൻ സഹായിക്കുന്നത്
     kotlinOptions {
         jvmTarget = '1.8'
         freeCompilerArgs += ["-language-version", "1.8"]
     }
 
     defaultConfig {
-        applicationId "com.example.monuss_try"
+        applicationId = "com.example.monuss_try"
         minSdkVersion 23
         targetSdkVersion 34 
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
 
+    // 🔑 App Signing Configuration
+    signingConfigs {
+        release {
+            keyAlias = keystoreProperties['keyAlias']
+            keyPassword = keystoreProperties['keyPassword']
+            storeFile = keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword = keystoreProperties['storePassword']
+        }
+    }
+
     buildTypes {
         release {
-            signingConfig = signingConfigs.debug
+            // debug മാറ്റി release signingConfig ആക്കി
+            signingConfig = signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
         }
     }
 }

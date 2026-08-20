@@ -19,7 +19,6 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      # Flutter-ന്റെ കൃത്യമായ പുതിയ Stable Version കൊടുത്തു
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -29,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Code Formatting Check (ക്ലീൻ കോഡ് ഉറപ്പാക്കാൻ)
+      # Code Formatting Check
       - name: Check Code Formatting
         run: dart format --output=none --set-exit-if-changed .
 
@@ -41,11 +40,20 @@ jobs:
       - name: Run Unit Tests
         run: flutter test || true
 
+      # Secrets ഉപയോഗിച്ച് Keystore, key.properties ഉണ്ടാക്കുന്നു
+      - name: Configure Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
+          echo "storeFile=upload-keystore.jks" >> android/key.properties
+
       # 1. Flutter Web Build
       - name: Build Web
         run: flutter build web --release --base-href "/monus_try/"
 
-      # 2. Flutter Android APK Build
+      # 2. Signed Android APK Build
       - name: Build Android APK
         run: flutter build apk --release
 
@@ -56,7 +64,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web
 
-      # Save Android APK as Artifact
+      # Save Signed APK as Artifact
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
