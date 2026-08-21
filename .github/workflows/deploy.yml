@@ -70,3 +70,19 @@ jobs:
         with:
           name: app-release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
+
+
+          # Firebase App Distribution-ലേക്ക് APK അയക്കുന്നു
+      - name: Upload to Firebase App Distribution
+        uses: w9jds/setup-firebase@v2
+        with:
+          gcp_service_account: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREDENTIALS }}
+
+      - name: Distribute APK to Testers
+        run: |
+          npx firebase-tools appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
+            --app "${{ secrets.FIREBASE_APP_ID }}" \
+            --groups "testers" \
+            --release-notes "New Automated Build via GitHub Actions"
+        env:
+          GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREDENTIALS }}
