@@ -52,11 +52,13 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web
 
-      - name: Distribute APK to Firebase App Distribution
+      - name: Distribute APK to Firebase
         run: |
+          echo "$FIREBASE_CREDENTIALS" > credentials.json
+          export GOOGLE_APPLICATION_CREDENTIALS=credentials.json
           npx firebase-tools appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app "${{ secrets.FIREBASE_APP_ID }}" \
             --groups "testers" \
-            --release-notes "New Automated Build via GitHub Actions"
+            --release-notes "Automated Build via GitHub Actions"
         env:
-          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREDENTIALS }}
+          FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREDENTIALS }}
