@@ -12,6 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
@@ -47,16 +52,11 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web
 
-      - name: Upload to Firebase App Distribution
-        uses: w9jds/setup-firebase@v2
-        with:
-          gcp_service_account: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREDENTIALS }}
-
-      - name: Distribute APK to Testers
+      - name: Distribute APK to Firebase App Distribution
         run: |
           npx firebase-tools appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app "${{ secrets.FIREBASE_APP_ID }}" \
             --groups "testers" \
             --release-notes "New Automated Build via GitHub Actions"
         env:
-          GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREDENTIALS }}
+          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREDENTIALS }}
