@@ -7,6 +7,7 @@ on:
 
 jobs:
   build:
+    
     runs-on: ubuntu-latest
 
     steps:
@@ -56,7 +57,7 @@ jobs:
         run: |
           echo "$FIREBASE_CREDENTIALS" > credentials.json
           export GOOGLE_APPLICATION_CREDENTIALS=credentials.json
-          npx firebase-tools appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
+          npx --yes firebase-tools appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app "${{ secrets.FIREBASE_APP_ID }}" \
             --groups "testers" \
             --release-notes "Automated Build via GitHub Actions"
